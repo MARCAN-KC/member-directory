@@ -94,7 +94,7 @@ with col1:
     st.page_link(docket_call_trainings, label="2025 Docket Call Karpel Training Refreshers", icon="📚")
     st.page_link(search_warrant_training, label="Search Warrant Training (Kristiane Bryant)", icon="🚨")
     st.page_link(apa_trainings, label="Oct 2025 APA Training", icon="📖")
-    st.page_link(wellness_training, label="Nov 2025 Well-being: Mental Health Training", icon="❤️‍🩹")
+    st.page_link(wellness_training, label="Nov 2025 ***Well-being: Mental Health*** Training", icon="❤️‍🩹")
 
     # CSU resources
     st.header("CSU Resources", divider="blue")
