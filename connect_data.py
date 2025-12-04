@@ -21,7 +21,7 @@ def get_database_session(database_url: str):
         pool = ConnectionPool(
             conninfo=database_url, 
             min_size=1, 
-            max_size=10,
+            max_size=100,
             max_lifetime=300, # recycle connections every 300 seconds
             max_idle=60, # close idle connections after 60 seconds
             timeout=10 # wait 10 seconds to connect
