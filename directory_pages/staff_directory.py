@@ -274,7 +274,7 @@ def display_employee(row):
             if row['Assigned Unit']:
                 unit = ' / '.join(row['Assigned Unit'])
             else:
-                unit = ':red[???]' # N/A 
+                unit = "**N/A**" # ':red[???]'
 
             # Office Location BADGE
             locations_badge = {
@@ -291,11 +291,11 @@ def display_employee(row):
             if not pd.isna(row['DOB Month']):
                 dob_month = int(row['DOB Month'])
             else:
-                dob_month = " "
+                dob_month = "N"
             if not pd.isna(row['DOB Day']):
                 dob_day = int(row['DOB Day'])
             else:
-                dob_day = " "
+                dob_day = "A"
             # dob_badge = st.badge(f"**Birthday:** {row['DOB Month']}/{row['DOB Day']}", icon="🎉", color="violet")
 
             # Display BADGE thread 
