@@ -56,12 +56,16 @@ def update_df():
         filtered_df = filtered_df[filtered_df['Office Location']==st.session_state["staffview_selected_location"]].reset_index(drop=True)
     if st.session_state["staffview_selected_month"] != 'All':
         filtered_df = filtered_df[filtered_df['DOB Month']==int(st.session_state["staffview_selected_month"])].reset_index(drop=True)
-    if st.session_state["staffview_searched_text"]: # Added searched_text to main clickback action 
+    if st.session_state["staffview_searched_text"]: 
+        # Update search function to split entered text into unique words, and check if any words appear in specified cols
+
         searched_text = st.session_state["staffview_searched_text"].strip().lower()
+        words = list({w for w in searched_text.split() if w}) # split search text into unique words
         search_cols = ["Full Name", "First Name", "Middle Name", "Last Name", "Suffix", "Preferred Name"]
-        filtered_df = filtered_df[
-            filtered_df[search_cols].apply(lambda row: any(searched_text in str(value).lower() for value in row), axis=1)
-        ].reset_index(drop=True)
+        combined = filtered_df[search_cols].astype(str).agg(" ".join, axis=1).str.lower() # combine searchable columns into a single lowercase string per row
+        mask = combined.apply(lambda text: any(word in text for word in words)) # match if ANY word appears in the combined text
+
+        filtered_df = filtered_df[mask].reset_index(drop=True)
 
     st.session_state["staffview_filtered_df"] = filtered_df.reset_index(drop=True)
 
