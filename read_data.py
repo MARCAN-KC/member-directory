@@ -59,3 +59,22 @@ def get_member_emails(df: pd.DataFrame) -> list:
 # Query tables 
 MEMBERS = query_table("SELECT * FROM member_directory WHERE active = TRUE")
 MEMBER_EMAILS = get_member_emails(MEMBERS)
+
+
+# --- Log activity --- 
+
+def log_user(
+    email_address: str,
+    _engine: Engine = engine
+):
+    try:
+        with _engine.connect() as conn:
+            conn.execute(
+                text("INSERT INTO member_log (login_email) VALUES (:email)"),
+                {"email": email_address},
+            )
+            conn.commit()
+
+    except Exception as e:
+        st.error(f"Error logging activity: {e}")
+

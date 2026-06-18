@@ -3,7 +3,7 @@ from pathlib import Path
 import time
 
 # from connect_data import log_user
-from read_data import MEMBER_EMAILS
+from read_data import MEMBER_EMAILS, log_user
 # st.write(MEMBER_EMAILS)
 
 # --- Configure Streamlit page settings --- 
@@ -47,7 +47,7 @@ def verify_attempt():
     # TODO - add security of checking if the @jacksongov.org email actually exists/is active in the database prior to verification
     # if (email.endswith("@courts.mo.gov") or email.endswith("@jacksongov.org")) and code == security_code:
     if email in MEMBER_EMAILS and code == security_code:
-        # log_user(email, "LOGIN") # also track ip address? [st.context.ip_address]
+        log_user(email) # also track ip address? [st.context.ip_address]
         success_message = st.success(f"Verification successful: *{st.session_state['verified_email']}*")
         time.sleep(2)
         success_message.empty()
