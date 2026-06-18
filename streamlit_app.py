@@ -57,7 +57,29 @@ def verify_attempt():
         time.sleep(2)
         fail_message.empty()
 
-# --- Enter security code --- 
+# --- New user dialog ---
+
+@st.dialog("New to the MARCAN Directory?", width="small")
+def new_user_dialog():
+    st.markdown(
+        """
+        The **MARCAN Member Directory** is *only* available to active MARCAN members who have completed the MARCAN Directory Form.
+
+        To be added to the directory and gain access, please complete the
+        **New Member Registration Form** below. Once submitted, your information
+        will be reviewed and you will receive an email confirming your information and directory access.
+        """
+    )
+    # st.divider()
+    st.write(" ")
+    st.page_link(
+        "https://form.jotform.com/260976583293067",
+        label="New Member Registration Form",
+        icon=":material/open_in_new:",
+    )
+
+
+# --- Enter security code ---
 
 def display_portal():
     """Display access portal"""
@@ -118,15 +140,25 @@ def display_portal():
                 type="password",
             )
 
-            # Submit 
+            # Submit
             verify_button = st.form_submit_button(
-                label="Verify", # :material/keyboard_return: 
+                label="Verify", # :material/keyboard_return:
                 icon=":material/keyboard_return:",
                 disabled=st.session_state["verified"],
                 on_click=verify_attempt,
                 type="primary",
                 width="stretch"
             )
+
+        # New user dialog trigger
+        if st.button(
+            "New user? Click here",
+            key="new_user_btn",
+            icon=":material/person_add:",
+            type="tertiary",
+            use_container_width=True,
+        ):
+            new_user_dialog()
 
 # --- Run STREAMLIT APP via st.navigation --- 
 
