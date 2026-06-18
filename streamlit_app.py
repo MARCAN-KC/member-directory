@@ -2,26 +2,28 @@ import streamlit as st
 from pathlib import Path
 import time
 
-from connect_data import log_user
+# from connect_data import log_user
+from read_data import MEMBER_EMAILS
+# st.write(MEMBER_EMAILS)
 
 # --- Configure Streamlit page settings --- 
 
-jcpao_logo = Path("assets/logo/jcpao_logo_500x500.png")
+marcan_logo = Path("assets/logo/marcan_logo.png")
 
 st.set_page_config(
-    page_title="JCPAO Directory", # court-view only
-    page_icon=jcpao_logo, # cloudinary.CloudinaryImage('jcpao_logo_200x200').build_url()
+    page_title="MARCAN Directory", # court-view only
+    page_icon=marcan_logo, # cloudinary.CloudinaryImage('marcan_logo_200x200').build_url()
     layout="wide", # "centered" or "wide"
     initial_sidebar_state="auto", # "expanded" / "auto" / "collapsed"
     menu_items={
         # 'Get Help': 'https://www.extremelycoolapp.com/help',
         'Report a bug': "mailto:ujcho@jacksongov.org", # To report a bug, please email
-        'About': "The JCPAO Portal was built by Joseph Cho and the Crime Strategies Unit (CSU) of the Jackson County Prosecuting Attorney's Office."
+        'About': "The MARCAN Directory was built by Joseph Cho, MARCAN Vice President of Administration"
     }
 )
 
 # --- JCPAO Streamlit page logo --- 
-st.logo(jcpao_logo, size="large", link="https://www.jacksoncountyprosecutor.com")
+st.logo(marcan_logo, size="large", link="https://www.marcan.org/")
 
 # --- Connect to database --- 
 
@@ -39,13 +41,13 @@ def verify_attempt():
     # Variables
     email = st.session_state["verified_email"]
     code = st.session_state["security_code"]
-    security_code = st.secrets["security_codes"]["court"]
+    security_code = st.secrets["security_codes"]["marcan"]
 
     # Check verification
     # TODO - add security of checking if the @jacksongov.org email actually exists/is active in the database prior to verification
     # if (email.endswith("@courts.mo.gov") or email.endswith("@jacksongov.org")) and code == security_code:
-    if email.endswith("@jacksongov.org") and code == security_code:
-        log_user(email, "LOGIN") # also track ip address? [st.context.ip_address]
+    if email in MEMBER_EMAILS and code == security_code:
+        # log_user(email, "LOGIN") # also track ip address? [st.context.ip_address]
         success_message = st.success(f"Verification successful: *{st.session_state['verified_email']}*")
         time.sleep(2)
         success_message.empty()
@@ -93,8 +95,8 @@ def display_portal():
         ):
             # st.markdown("<h1 style='text-align: center; color: black;'>Court-View Directory</h1>", unsafe_allow_html=True)
             # st.markdown(":small[*Please verify the following information to access the directory*]", unsafe_allow_html=True) # :material/gavel:
-            st.markdown("<h3 style='text-align: center; color: #0047ab;'>JCPAO Directory</h3>", unsafe_allow_html=True)
-            st.markdown("<div style='text-align: center; font-size: small; font-weight: bold; color: #0047ab; '>Please verify the following information to access the directory</div>", unsafe_allow_html=True)
+            st.markdown("<h3 style='text-align: center; color: #000000;'>MARCAN Member Directory</h3>", unsafe_allow_html=True)
+            st.markdown("<div style='text-align: center; font-size: small; font-weight: bold; color: #000000; '>Please verify the following information to access the directory</div>", unsafe_allow_html=True)
             st.divider()
 
             # Email
@@ -142,18 +144,18 @@ else: # st.session_state["verified"] == TRUE
     # Display APA Directory 
     directory_pages = {
         "Home": [
-            st.Page("directory_pages/welcome_page.py", title="JCPAO Portal", icon=":material/home:"), # 🏡 
+            st.Page("directory_pages/welcome_page.py", title="MARCAN Portal", icon=":material/home:"), # 🏡 
         ],
-        "Directories": [
-            st.Page("directory_pages/staff_directory.py", title="Staff Directory", icon=":material/contacts:"), # ☎️
-            st.Page("directory_pages/staff_birthdays.py", title="Staff Birthdays", icon=":material/cake:"), # 🎂
-            st.Page("directory_pages/court_directory.py", title="Court-view Directory", icon=":material/account_balance:"), # 🏛️
+        "Directory Information": [
+            st.Page("directory_pages/staff_directory.py", title="Member Directory", icon=":material/contacts:"), # ☎️
+            # st.Page("directory_pages/staff_birthdays.py", title="Staff Birthdays", icon=":material/cake:"), # 🎂
+            # st.Page("directory_pages/court_directory.py", title="Court-view Directory", icon=":material/account_balance:"), # 🏛️
         ],
         "Resources": [
             # st.Page("court_view.py", title="JCPAO Attorney Directory", icon=":material/contact_page:"),
-            st.Page("directory_pages/staff_dashboard.py", title="Staff Dashboard", icon=":material/monitoring:"),
-            st.Page("directory_pages/faq.py", title="Frequently Asked Questions", icon=":material/question_mark:"),
-            st.Page("directory_pages/resources.py", title="Office Resources", icon=":material/support_agent:"),
+            # st.Page("directory_pages/staff_dashboard.py", title="Staff Dashboard", icon=":material/monitoring:"),
+            # st.Page("directory_pages/faq.py", title="Frequently Asked Questions", icon=":material/question_mark:"),
+            st.Page("directory_pages/resources.py", title="MARCAN Resources", icon=":material/support_agent:"),
         ], 
     }
 

@@ -19,10 +19,8 @@ from photo import load_photo
 MEMBERS['City'] = MEMBERS['agency_address'].str.split(',').str[1].str.strip()
 MEMBERS['State'] = MEMBERS['agency_address'].str.split(',').str[2].str.strip()
 
-st.dataframe(MEMBERS)
-
 # st.title("Staff Directory")
-# TODO - directory pagination? 
+# TODO - directory pagination?
 
 # # --- Configure Streamlit page settings --- 
 # jcpao_logo = Path("assets/logo/jcpao_logo_500x500.png")
@@ -98,12 +96,11 @@ with st.sidebar:
         ":blue-badge[⭐️ **Executive Board:**]",
         key="exec_board",
         help="Filter directory to only members of the Executive Board",
-        # width="stretch",
+        on_change=update_df,
     )
     
     # Filter by City
-    # cities_dict = {k: k for k in MEMBERS['City'].dropna().unique()}
-    cities_dict = {
+    cities_dict = {"All": "All"} | {
         f"{row['City']}, {row['State']}": f"{row['City']}, {row['State']}"
         for _, row in MEMBERS[['City', 'State']].dropna().drop_duplicates().iterrows()
     }
@@ -118,7 +115,7 @@ with st.sidebar:
     )
 
     # Filter by State
-    states_dict = {k: k for k in MEMBERS['State'].dropna().unique()}
+    states_dict = {"All": "All"} | {k: k for k in MEMBERS['State'].dropna().unique()}
     states_options = st.selectbox(
         label= ":blue-badge[**Filter by State:**]",
         options=states_dict.keys(),

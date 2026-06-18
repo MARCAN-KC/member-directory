@@ -8,10 +8,10 @@ from datetime import datetime
 with st.sidebar:
 
     # Select options: position / unit / location / birthday month 
-    st.title("Jackson County Prosecuting Attorney's Office")
-    st.write("***Home Page***")
+    st.title("Mid-America Regional Crime Analysis Network (MARCAN)")
+    st.write("***Welcome Page***")
     st.divider()
-    st.write("Welcome to the JCPAO Portal! Please use the tabs at the top of the page to navigate through directories and other office resources. If you have a feature or request to add, please contact [Joseph Cho](mailto:ujcho@jacksongov.org).")
+    st.write("Welcome to the MARCAN Directory! Please use the tabs at the top of the page to navigate through directories and other resources. If you have a feature or request to add, please contact MARCAN VP of Admin [Joseph Cho](mailto:ujcho@jacksongov.org).")
     st.divider()
     st.write("To securely exit portal, logout or just exit page:")
 
@@ -26,7 +26,7 @@ with st.sidebar:
 
 # --- Run page ---
 
-st.markdown("<h1 style='text-align: center; color: black;'>Welcome to the JCPAO Directory</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: black;'>Welcome to the MARCAN Directory</h1>", unsafe_allow_html=True)
 st.divider()
 
 # Home bulletin
