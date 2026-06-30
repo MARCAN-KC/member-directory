@@ -1,6 +1,7 @@
 import streamlit as st
 from pathlib import Path
 import time
+import base64
 
 # from connect_data import log_user
 from read_data import MEMBER_EMAILS, log_user
@@ -22,8 +23,13 @@ st.set_page_config(
     }
 )
 
-# --- JCPAO Streamlit page logo --- 
+# --- JCPAO Streamlit page logo ---
 st.logo(marcan_logo, size="large", link="https://www.marcan.org/")
+
+@st.cache_data
+def get_logo_base64(path: Path) -> str:
+    """Base64-encode the logo so it can be centered via custom HTML."""
+    return base64.b64encode(path.read_bytes()).decode()
 
 # --- Connect to database --- 
 
@@ -88,7 +94,7 @@ def display_portal():
     st.markdown(
         """
         <style>
-        .space { margin-top: 200px; }
+        .space { margin-top: 100px; }
         </style>
         <div class="space"></div>
         """,
@@ -99,14 +105,24 @@ def display_portal():
     cols = st.columns(
         3, 
         gap=None,
-        vertical_alignment="center",
+        vertical_alignment="top", # center / bottom
         border=False,
         width="stretch"
     )
 
     with cols[1]:
-        
-        # Form to verify user 
+
+        # Centered MARCAN logo
+        st.markdown(
+            f"""
+            <div style='text-align: center; margin-bottom: 36px;'>
+                <img src='data:image/png;base64,{get_logo_base64(marcan_logo)}' width='200'>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        # Form to verify user
         with st.form(
             "verify_user",
             clear_on_submit=False,
@@ -117,9 +133,9 @@ def display_portal():
         ):
             # st.markdown("<h1 style='text-align: center; color: black;'>Court-View Directory</h1>", unsafe_allow_html=True)
             # st.markdown(":small[*Please verify the following information to access the directory*]", unsafe_allow_html=True) # :material/gavel:
-            st.markdown("<h3 style='text-align: center; color: #000000;'>MARCAN Member Directory</h3>", unsafe_allow_html=True)
-            st.markdown("<div style='text-align: center; font-size: small; font-weight: bold; color: #000000; '>Please verify the following information to access the directory</div>", unsafe_allow_html=True)
-            st.divider()
+            st.markdown("<div style='text-align: center; font-size: 1.75rem; font-weight: bold; color: #000000;'>MARCAN Member Directory</div>", unsafe_allow_html=True)
+            st.markdown("<div style='text-align: center; font-size: small; color: #000000; margin-bottom: 20px;'>Please verify the following information to access the directory</div>", unsafe_allow_html=True)
+            # st.divider()
 
             # Email
             verified_email = st.text_input(
