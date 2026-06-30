@@ -204,6 +204,7 @@ else: # st.session_state["verified"] == TRUE
             # st.Page("directory_pages/staff_dashboard.py", title="Staff Dashboard", icon=":material/monitoring:"),
             # st.Page("directory_pages/faq.py", title="Frequently Asked Questions", icon=":material/question_mark:"),
             st.Page("directory_pages/resources.py", title="MARCAN Resources", icon=":material/support_agent:"),
+            st.Page("directory_pages/calendar.py", title="MARCAN Calendar", icon=":material/calendar_month:"),
         ], 
     }
 
