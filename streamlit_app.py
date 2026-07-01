@@ -72,7 +72,7 @@ def new_user_dialog():
         The **MARCAN Member Directory** is *only* available to active MARCAN members who have completed the MARCAN Directory Form.
 
         To be added to the directory and gain access, please complete the
-        **New Member Registration Form** below. Once submitted, your information
+        [**New Member Registration Form**](https://form.jotform.com/260976583293067) below. Once submitted, your information
         will be reviewed and you will receive an email confirming your information and directory access.
         """
     )
